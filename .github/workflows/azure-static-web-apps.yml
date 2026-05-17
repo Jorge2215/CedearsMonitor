@@ -10,7 +10,7 @@ on:
     branches:
       - main
       - dev
-  workflow_dispatch:   # enables manual runs from the Actions tab
+  workflow_dispatch:   # 👈 habilita ejecución manual desde la pestaña Actions
 
 jobs:
   test:
@@ -38,6 +38,15 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
       - name: Deploy to Azure Static Web Apps
         uses: Azure/static-web-apps-deploy@v1
         with:
@@ -46,6 +55,7 @@ jobs:
           action: "upload"
           app_location: "/"
           output_location: "dist"
+          skip_app_build: true
 
   close_pull_request:
     runs-on: ubuntu-latest
