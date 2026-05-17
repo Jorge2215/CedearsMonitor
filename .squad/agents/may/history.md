@@ -90,3 +90,7 @@
 ### 2026-05-17T15:03:55Z ï¿½ SearchableDropdown test expansion
 - Expanded SearchableDropdown.test.jsx to 45 active tests (+5 todos).
 - Added ARIA assertions, double-selection safety, keyboard navigation tests. Test run: 75/75 passing.
+
+### 2026-05-17T23:42:26Z — Tests added
+- 43 tests added for ExportButton (total 118 passing). Flagged todos: volume column, filename sanitization.
+

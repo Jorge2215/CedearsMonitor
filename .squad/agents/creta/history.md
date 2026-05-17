@@ -64,3 +64,7 @@
 - Both buttons disabled when `loading || data.length === 0`. `useToast` for success/error feedback.
 - Placed in DataTable card header using `Flex justify=space-between`. File naming: `Cedear_<Ticker>_<YYYY-MM-DD>.<ext>`.
 - Build passed (2176 modules). Commit: a6868ce.
+
+### 2026-05-17T23:42:26Z — Export feature merged
+- ExportButton.jsx implemented, commit ea02a3c. CSV + Excel export added. Known gaps: volume column, filename sanitization.
+
