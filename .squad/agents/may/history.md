@@ -13,25 +13,8 @@
 - Authored comprehensive test suite (30 tests) across service, hook, components, and integration. Tests cover financial edge cases and environment constraints.
 - Outcome: All tests passing (30/30), enabling safe iteration in subsequent phases.
 
-
-### 2026-05-16 — Chakra UI Migration: Test Infrastructure & Fixes
 
-**Context:** Creta completed full Chakra UI v2 overhaul (App, DataTable, PriceChart, TickerDropdown, main.jsx).
-
-**Failures found (2/30):**
-1. `DataTable > renders table headers` — headers renamed to Spanish: Fecha/Apertura/Máximo/Mínimo/Cierre
-2. `PriceChart > shows ticker name` — ticker title moved to App.jsx; PriceChart no longer renders it
-
-**Fixes applied:**
-- `DataTable.test.jsx`: Updated header assertions to match Spanish column names
-- `PriceChart.test.jsx`: Replaced ticker-name test with "chart renders data (no 'no data' text)" assertion
-- `src/test-utils.jsx`: Created ChakraProvider + custom theme wrapper (`renderWithChakra`) for future theme-aware tests
-- `vite.config.js`: Added `server.deps.inline` for framer-motion and Chakra ESM packages
-
-**Key finding:** Chakra UI components render correctly in jsdom WITHOUT ChakraProvider (they use internal defaults). The 28/30 pre-fix passing tests confirmed this. The ChakraProvider wrapper in test-utils.jsx is provided for future theme-specific assertions.
-
-**Outcome:** 30/30 tests passing. Pushed to origin/dev.
-
+### 2026-05-16 — Test Strategy Established
 
 **Stack confirmed:** React 18 + Vite 5, Vitest + React Testing Library + jsdom, Recharts, fetch-based API client.
 
