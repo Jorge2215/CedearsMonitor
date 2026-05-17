@@ -56,3 +56,6 @@ pm run build, and deploy from output_location: "dist".
 - **Key gotchas for Creta:** ChakraProvider CSS reset conflicts with index.css (remove duplicate resets); react-datepicker z-index needs `z-index: 1400` override; framer-motion ESM may need `optimizeDeps` in vite.config.js; update Vitest tests from CSS class selectors to ARIA role selectors.
 - **Install:** `npm install @chakra-ui/react @emotion/react @emotion/styled framer-motion`
 - **Decision doc:** `.squad/decisions/inbox/toru-ui-framework.md`
+
+### 2026-05-16T22:16:46-03:00: README updated
+- Action: Toru updated README.md to reflect Chakra UI v2 stack, added `src/theme.js`, and updated Azure SWA deployment details. Changes were committed and pushed to `main`.

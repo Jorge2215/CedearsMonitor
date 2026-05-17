@@ -135,4 +135,66 @@ Why: Minimal stack, production-ready; Azure SWA handles CDN and global distribut
 
 ---
 
+
+---
+
+## toru-ui-framework.md
+
+# UI Framework Decision
+
+**Date:** 2026-05-16  
+**Author:** Toru (Lead)  
+**Status:** Approved
+
+---
+
+## Framework: Chakra UI v2
+
+---
+
+## Why Chakra UI over MUI
+
+| Criterion | Chakra UI v2 | MUI v5 | Decision |
+|---|---|---|---|
+| Bundle size (gzipped) | ~100 KB | ~300 KB | ✅ Chakra |
+| Emotion overhead | ~20 KB (shared) | ~20 KB (shared) | Tie |
+| DatePicker component | ❌ None | ✅ @mui/x-date-pickers (+70 KB) | N/A — keep react-datepicker |
+| Theming complexity | Simple token-based extendTheme | Complex createTheme + sx prop | ✅ Chakra |
+| Table component | ✅ Table/Thead/Tbody/Tr/Th/Td | ✅ TableContainer/Table/etc. | Tie |
+| Spinner | ✅ `<Spinner />` | ✅ `<CircularProgress />` | Tie |
+| Select | ✅ `<Select />` | ✅ `<Select />` | Tie |
+| Button | ✅ `<Button />` | ✅ `<Button />` | Tie |
+| Vite 5 compat | ✅ No issues | ✅ No issues | Tie |
+| CSS reset conflict risk | Medium (ChakraProvider resets) | High (CssBaseline aggressive) | ✅ Chakra |
+
+**Verdict:** Bundle size is the decisive factor. Recharts already triggers a chunk size warning. Adding MUI at +300 KB would push the main bundle well past 1 MB. Chakra at +100 KB is acceptable. The DatePicker situation is identical for both (neither justifies replacing react-datepicker which is already installed and working). Chakra's `extendTheme` token system is a better fit for a pastel financial dashboard than MUI's `createTheme`.
+
+---
+
+## Install Command
+
+```bash
+npm install @chakra-ui/react @emotion/react @emotion/styled framer-motion
+```
+
+No additional packages needed. Keep existing `react-datepicker` and `date-fns`.
+
+---
+
+## Theme Configuration
+
+File: `src/theme.js`
+
+(Theme configuration omitted here; full theme stored in `.squad/decisions/inbox/toru-ui-framework.md`)
+
+---
+
+## toru-docs-updated.md
+
+### 2026-05-16: README updated post Chakra UI migration
+**By:** Toru
+**What:** README.md updated to reflect Chakra UI v2 stack, project structure with theme.js, and Azure SWA deployment details
+**Why:** Docs were stale after the UI overhaul
+
+
 *Inbox files merged and removed from `.squad/decisions/inbox/`.*
