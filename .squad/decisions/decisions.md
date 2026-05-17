@@ -409,3 +409,86 @@ Once the fix is in, implement the 5 it.todo tests using the i.resetModules() ha
 - **userEvent.type() for search input:** works correctly but makes the 50-test suite take minutes. Replaced with ireEvent.change.
 - **Snapshot tests:** too fragile with react-select's generated class names and IDs.
 - **Testing react-select internals:** we test behavior (options visible, onChange called) not react-select's own implementation.
+
+---
+
+
+# Decision: Data Export — Library Choice and Data Shape
+
+**Date:** 2026-05-17  
+**Author:** Creta (Frontend Dev)  
+**Status:** Implemented
+
+## Context
+
+Jorge requested a visible Export Data feature so users can download CEDEAR price data as CSV or Excel files, browser-side with no server involvement.
+
+## Data Shape
+
+The `useCedearData` hook exposes `Array<{date: string, o: number, h: number, l: number, c: number}>` (OHLC — no volume field). The currently selected ticker is a plain `string` from App.jsx state. No volume column is available in the dataset.
+
+## Library Decision: SheetJS (`xlsx`)
+
+**Chosen:** `xlsx` (SheetJS community edition, v0.18+)  
+**Alternatives considered:** `exceljs` (heavier, ~300KB), `papaparse` (CSV only), native Blob (CSV only)
+
+**Rationale:**
+- SheetJS is the de-facto standard for client-side `.xlsx` generation — wide adoption and no server dependency.
+- Pure browser-side: `XLSX.writeFile` triggers download directly, no backend.
+- CSV is handled via native Blob API (zero dependency overhead).
+- Header bold + fill styles are set via `ws[cellRef].s` — rendering is best-effort as full style support requires xlsx-pro; major spreadsheet apps (Excel, LibreOffice) do apply them.
+
+## File Naming Convention
+
+`Cedear_<Ticker>_<YYYY-MM-DD>.<ext>` — date is the day of export (client's local date via `date-fns` format).
+
+## UI Placement
+
+Export buttons live in the DataTable card header, right-aligned via `<Flex justify="space-between">`. Separate "Export CSV" and "Export Excel" buttons (not a dropdown menu) for discoverability and mobile touch usability.
+
+## Edge Cases Handled
+
+- No data loaded / empty dataset → buttons disabled + warning toast "No data available to export"
+- Loading in progress → buttons disabled
+- Unexpected export error → error toast with message
+
+
+---
+
+
+# Decision: Export Button Test Strategy
+**Author:** May  
+**Date:** 2026-05-17  
+**Status:** Active
+
+## Context
+
+Creta built `ExportButton.jsx` simultaneously. Tests were written against the live component (not a stub), so the strategy is grounded in the actual implementation.
+
+## Decision
+
+The export feature is tested in `src/components/__tests__/ExportButton.test.jsx` with **43 active tests + 2 it.todo items** across 6 sections:
+
+1. **Rendering** — button labels are discoverable by accessible role + name
+2. **Disabled states** — null data, empty array, loading flag
+3. **CSV mechanics** — blob URL creation, anchor click, filename pattern, header content, row data, MIME type, URL revocation
+4. **Excel mechanics** — `XLSX.json_to_sheet` call shape, workbook creation, sheet naming, `XLSX.writeFile` filename
+5. **Toast feedback** — success/error toasts via mocked `useToast`
+6. **Edge cases** — null close/open prices, undefined fields, 1000-row stress test, dot-separated tickers
+
+## Known Gaps (tracked as it.todo)
+
+- **Filename sanitization:** `getFileName()` in `ExportButton.jsx` does no sanitization of the ticker string. Filesystem-unsafe characters (slashes, colons, etc.) in a ticker would produce a dangerous filename. Test flagged; sanitization logic deferred to Creta.
+- **Volume column:** Original spec called for Date, Close, Volume export. Current implementation exports full OHLC (no volume) because the API response (`cedearService`) does not return a `v` field. The todo tracks re-enabling Volume once the API provides it.
+
+## Mocking Patterns Established
+
+- **xlsx:** `vi.hoisted()` + `vi.mock('xlsx', factory)` — both namespace and default import styles covered
+- **Chakra useToast:** Partial mock via `async importOriginal` spread; `...actual` preserves all real Chakra components
+- **File download:** `URL.createObjectURL` / `URL.revokeObjectURL` global mocks + `document.createElement` spy that suppresses `<a>.click()` without blocking Chakra portal setup
+- **Blob content reading:** `FileReader` helper (jsdom's Blob lacks `.text()`)
+
+## What NOT to Do
+
+- **Do not mock `document.body.appendChild`** in any test that renders Chakra components — it breaks ChakraProvider's portal setup and makes all button queries fail silently.
+

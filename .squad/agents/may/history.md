@@ -9,6 +9,17 @@
 
 <!-- Append new learnings below. Each entry is something lasting about the project. -->
 
+### 2026-05-17 — ExportButton test infrastructure (Data Export feature)
+
+- **Component:** `src/components/ExportButton.jsx` — uses `xlsx` (installed), `date-fns` `format`, and Chakra's `useToast`. Exports OHLC columns (Date, Open, High, Low, Close) via CSV + Excel. **No Volume column** despite spec — divergence tracked as `it.todo`.
+- **Test file:** `src/components/__tests__/ExportButton.test.jsx` — 43 active tests + 2 todos across 6 sections (rendering, disabled states, CSV mechanics, Excel mechanics, toast feedback, edge cases).
+- **xlsx mock:** Use `vi.hoisted()` to declare mock function references before `vi.mock('xlsx', factory)` is hoisted. This is required because `vi.mock` factories run in a hoisted context where regular `const` declarations are not yet in scope.
+- **Chakra `useToast` partial mock:** `vi.mock('@chakra-ui/react', async (importOriginal) => { const actual = await importOriginal(); return { ...actual, useToast: () => mockFn } })` — preserves all real Chakra components while replacing the hook.
+- **CRITICAL: Never mock `document.body.appendChild`** in tests that render Chakra components. Chakra's `ChakraProvider` calls `body.appendChild` during setup to create portal containers (toasts, modals). Mocking it prevents all rendering — all `getByRole('button')` queries fail with "Unable to find accessible element".
+- **`blob.text()` unavailable in jsdom:** jsdom's `Blob` does not expose a `.text()` method. Use `FileReader` instead: `new Promise((resolve, reject) => { const r = new FileReader(); r.onload = () => resolve(r.result); r.onerror = reject; r.readAsText(blob) })`.
+- **Anchor download interception:** Safe pattern: capture `original = document.createElement.bind(document)` before installing `vi.spyOn`, then call `original(tag)` for all tags, only spy on `.click()` for `<a>` elements. This lets Chakra create all its portals normally while suppressing browser navigation.
+- **Test counts:** After this session: 8 test files, 118 passing, 7 todos.
+
 ### 2026-05-17 — react-select v5 test patterns (TickerDropdown)
 
 - **Component:** `TickerDropdown.jsx` uses **react-select v5** (not a custom combobox). `sorted` and `options` arrays are computed at MODULE scope from `CedearsList.json`.
@@ -76,6 +87,6 @@
 - `@testing-library/react` `renderHook` + `act` used for async hook state assertions.
 
 
-### 2026-05-17T15:03:55Z � SearchableDropdown test expansion
+### 2026-05-17T15:03:55Z � SearchableDropdown test expansion
 - Expanded SearchableDropdown.test.jsx to 45 active tests (+5 todos).
 - Added ARIA assertions, double-selection safety, keyboard navigation tests. Test run: 75/75 passing.
