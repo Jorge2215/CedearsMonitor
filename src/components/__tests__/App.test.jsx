@@ -19,6 +19,17 @@ vi.mock('../../data/CedearsList.json', () => ({
   ]
 }))
 
+// Stub the CEDEAR selector regardless of whether it is TickerDropdown (static
+// <select>) or SearchableDropdown (combobox input). Tests below interact with
+// App behaviour, not dropdown internals.
+vi.mock('../TickerDropdown', () => ({
+  default: ({ onChange }) => (
+    <button type="button" onClick={() => onChange('MSFT')}>
+      Select MSFT
+    </button>
+  ),
+}))
+
 global.ResizeObserver = vi.fn(() => ({
   observe: vi.fn(),
   unobserve: vi.fn(),
@@ -44,8 +55,8 @@ describe('App', () => {
 
   it('Consultar button is enabled after selecting a ticker', async () => {
     render(<App />)
-    const select = screen.getByRole('combobox')
-    fireEvent.change(select, { target: { value: 'MSFT' } })
+    // Trigger the stubbed dropdown's onChange to simulate a ticker selection
+    fireEvent.click(screen.getByRole('button', { name: /Select MSFT/i }))
     const button = screen.getByRole('button', { name: /consultar/i })
     await waitFor(() => expect(button).not.toBeDisabled())
   })
