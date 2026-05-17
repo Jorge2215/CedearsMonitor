@@ -32,3 +32,16 @@
 - **API:** `https://data912.com/historical/cedears/{ticker}` â€” no auth, no backend needed
 - **Deployment:** Azure Static Web Apps, output in `dist/`, CI/CD via GitHub Actions
 - Architecture decision documented in `.squad/decisions/inbox/toru-react-vite-architecture.md`
+
+
+### 2026-05-16: Azure SWA blank screen — skip_app_build diagnosis and fix
+- Key finding: skip_app_build: true with output_location: "dist" does NOT upload from dist/ — it uploads from pp_location (repo root), serving the raw dev index.html.
+- Fix: Remove skip_app_build: true and the manual Node.js setup / 
+pm ci / 
+pm run build steps. Let the Azure SWA Oryx builder auto-detect Node.js/Vite, run 
+pm run build, and deploy from output_location: "dist".
+- Commit: 6eb7761 pushed to both dev and main, triggering redeployment.
+### 2026-05-16T21:50:21.867-03:00: Deployment fix applied (toru)
+- Action: Removed `skip_app_build: true` and allowed Oryx to build the Vite app. Commit 6eb7761 was pushed to dev and merged to main.
+- Verification: CI/CD redeployment started; live site: https://kind-coast-09b59f110.7.azurestaticapps.net/
+- Notes: Coordinator diagnosed root cause (skip_app_build behavior) and monitored run #13.
