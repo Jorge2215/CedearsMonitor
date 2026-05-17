@@ -49,3 +49,18 @@
 ### 2026-05-17T15:03:55Z — SearchableDropdown implemented
 - Implemented SearchableDropdown.jsx (custom combobox). Filtering on Ticket and Company, keyboard navigation (Arrow keys, Enter, Escape), match highlighting, aria-label on options to fix accessible-name fragmentation.
 - Fixed 4 failing tests; all tests passing. Commit: cc4b02b
+
+
+### 2026-05-17T20:15:12 - Data Export Feature (CSV + Excel)
+
+**Data shape found:**
+- Hook `useCedearData` returns `Array<{date: string, o: number, h: number, l: number, c: number}>` - OHLC only, no volume field.
+- Selected ticker is plain `string` state in App.jsx. Data available via `data` state; `loading` boolean guards the button.
+
+**What was built:**
+- `src/components/ExportButton.jsx` - standalone component accepting `{ data, ticker, loading }` props.
+- CSV: native Blob API -> `URL.createObjectURL` -> anchor click -> `URL.revokeObjectURL`. Columns: Date, Open, High, Low, Close.
+- Excel: SheetJS `xlsx` library (`npm install xlsx`). `XLSX.utils.json_to_sheet` + `XLSX.writeFile`. Column widths set via `ws['!cols']`.
+- Both buttons disabled when `loading || data.length === 0`. `useToast` for success/error feedback.
+- Placed in DataTable card header using `Flex justify=space-between`. File naming: `Cedear_<Ticker>_<YYYY-MM-DD>.<ext>`.
+- Build passed (2176 modules). Commit: a6868ce.
