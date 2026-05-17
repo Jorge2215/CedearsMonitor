@@ -1,4 +1,4 @@
-# Cedears Monitor
+# Cedears Monitor by Jorgito
 
 A responsive web application for analyzing the historical price evolution of CEDEARs — Argentine certificates of foreign stocks.
 
