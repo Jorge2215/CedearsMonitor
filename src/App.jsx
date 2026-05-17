@@ -18,6 +18,7 @@ import TickerDropdown from './components/TickerDropdown'
 import DateRangePicker from './components/DateRangePicker'
 import DataTable from './components/DataTable'
 import PriceChart from './components/PriceChart'
+import ExportButton from './components/ExportButton'
 import { useCedearData } from './hooks/useCedearData'
 
 function App() {
@@ -102,7 +103,10 @@ function App() {
 
               <Card>
                 <CardBody>
-                  <Heading size="md" mb={4}>📊 Datos OHLC</Heading>
+                  <Flex justify="space-between" align="center" mb={4} wrap="wrap" gap={3}>
+                    <Heading size="md">📊 Datos OHLC</Heading>
+                    <ExportButton data={data} ticker={ticker} loading={loading} />
+                  </Flex>
                   <DataTable data={data} />
                 </CardBody>
               </Card>
