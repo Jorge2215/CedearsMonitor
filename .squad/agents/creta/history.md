@@ -44,3 +44,8 @@
 - All 67 tests pass (5 todos remaining for null/undefined data edge cases requiring `vi.resetModules()` isolation harness).
 - Commit: `cc4b02b`
 
+
+
+### 2026-05-17T15:03:55Z — SearchableDropdown implemented
+- Implemented SearchableDropdown.jsx (custom combobox). Filtering on Ticket and Company, keyboard navigation (Arrow keys, Enter, Escape), match highlighting, aria-label on options to fix accessible-name fragmentation.
+- Fixed 4 failing tests; all tests passing. Commit: cc4b02b

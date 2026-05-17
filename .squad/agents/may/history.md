@@ -74,3 +74,8 @@
 - jsdom requires `ResizeObserver` mocked for any Recharts test.
 - JSON module mocking in Vitest uses `vi.mock('path', () => ({ default: [...] }))` â€” default export required.
 - `@testing-library/react` `renderHook` + `act` used for async hook state assertions.
+
+
+### 2026-05-17T15:03:55Z — SearchableDropdown test expansion
+- Expanded SearchableDropdown.test.jsx to 45 active tests (+5 todos).
+- Added ARIA assertions, double-selection safety, keyboard navigation tests. Test run: 75/75 passing.
