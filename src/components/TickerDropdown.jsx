@@ -6,22 +6,17 @@ export default function TickerDropdown({ value, onChange }) {
 
   return (
     <FormControl minW="280px" flex="1">
-      <FormLabel
-        fontSize="sm"
-        fontWeight={600}
-        color="text.secondary"
-        textTransform="uppercase"
-        letterSpacing="0.04em"
-        mb={1}
-      >
+      <FormLabel fontSize="sm" fontWeight="600" color="text.secondary" mb={1}>
         CEDEAR
       </FormLabel>
       <Select
         id="ticker-select"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="Select a CEDEAR..."
+        placeholder="Seleccionar CEDEAR..."
         size="md"
+        focusBorderColor="brand.primary"
+        borderRadius="lg"
       >
         {sorted.map(({ Ticket, Company }) => (
           <option key={Ticket} value={Ticket}>

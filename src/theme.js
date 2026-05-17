@@ -1,19 +1,21 @@
 import { extendTheme } from '@chakra-ui/react'
 
 const theme = extendTheme({
+  fonts: {
+    heading: `'Poppins', sans-serif`,
+    body:    `'Poppins', sans-serif`,
+  },
   colors: {
     brand: {
-      50:  '#EFF6FF',
-      100: '#DBEAFE',
-      200: '#BFDBFE',
-      500: '#3B82F6',
-      600: '#2563EB',
-      700: '#1D4ED8',
-    },
-    pastel: {
-      green:  '#D1FAE5',
-      red:    '#FEE2E2',
-      purple: '#EDE9FE',
+      primary:      '#06B6D4',
+      primaryDark:  '#0891B2',
+      primaryLight: '#CFFAFE',
+      coral:        '#F97316',
+      coralDark:    '#EA580C',
+      lime:         '#84CC16',
+      lavender:     '#C4B5FD',
+      yellow:       '#FEF08A',
+      pink:         '#FBCFE8',
     },
     bg: {
       page:    '#F8FAFC',
@@ -27,13 +29,7 @@ const theme = extendTheme({
     },
     border: {
       default: '#E2E8F0',
-      focus:   '#3B82F6',
     },
-  },
-  fonts: {
-    heading: `'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`,
-    body:    `'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`,
-    mono:    `'JetBrains Mono', 'Fira Code', monospace`,
   },
   fontSizes: {
     xs:   '12px',
@@ -49,16 +45,20 @@ const theme = extendTheme({
     md: '10px',
     lg: '14px',
     xl: '20px',
+    full: '9999px',
   },
   shadows: {
-    card:  '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06)',
-    focus: '0 0 0 3px rgba(59, 130, 246, 0.20)',
+    card: '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06)',
+    sm:   '0 1px 2px rgba(0,0,0,0.05)',
+    md:   '0 4px 6px rgba(0,0,0,0.07), 0 2px 4px rgba(0,0,0,0.06)',
+    lg:   '0 10px 25px rgba(0,0,0,0.10)',
   },
   styles: {
     global: {
       body: {
         bg:         'bg.page',
         color:      'text.primary',
+        fontFamily: `'Poppins', sans-serif`,
         fontSize:   '14px',
         lineHeight: '1.6',
       },
@@ -69,11 +69,31 @@ const theme = extendTheme({
   },
   components: {
     Button: {
-      defaultProps: { colorScheme: 'brand' },
       baseStyle: {
-        fontWeight:   600,
-        borderRadius: 'sm',
+        borderRadius: 'full',
+        fontWeight:   '600',
+        _focus: { boxShadow: 'none' },
       },
+      variants: {
+        solid: {
+          bg:    'brand.coral',
+          color: 'white',
+          _hover: {
+            bg:        'brand.coralDark',
+            transform: 'translateY(-1px)',
+            boxShadow: 'md',
+            _disabled: { bg: 'brand.coral', transform: 'none', boxShadow: 'none' },
+          },
+          _active:   { transform: 'translateY(0)' },
+          transition: 'all 0.2s',
+        },
+        outline: {
+          borderColor: 'brand.primary',
+          color:       'brand.primary',
+          _hover:      { bg: 'brand.primaryLight' },
+        },
+      },
+      defaultProps: { variant: 'solid' },
       sizes: {
         md: { h: '40px', px: '24px', fontSize: 'md' },
       },
@@ -81,12 +101,12 @@ const theme = extendTheme({
     Select: {
       baseStyle: {
         field: {
-          borderRadius: 'sm',
+          borderRadius: 'lg',
           borderColor:  'border.default',
           fontSize:     'md',
           _focus: {
-            borderColor: 'brand.500',
-            boxShadow:   'focus',
+            borderColor: 'brand.primary',
+            boxShadow:   '0 0 0 3px rgba(6,182,212,0.20)',
           },
         },
       },
@@ -95,30 +115,39 @@ const theme = extendTheme({
       variants: {
         cedear: {
           th: {
-            bg:              'bg.subtle',
-            color:           'text.secondary',
-            fontSize:        'sm',
-            fontWeight:      600,
-            textTransform:   'uppercase',
-            letterSpacing:   '0.04em',
-            borderBottomWidth: '2px',
-            borderColor:     'border.default',
+            bg:            'brand.primary',
+            color:         'white',
+            fontWeight:    '600',
+            fontSize:      'sm',
+            letterSpacing: 'wide',
+            textTransform: 'none',
+            borderColor:   'brand.primaryDark',
             px: '16px',
-            py: '10px',
+            py: 4,
           },
           td: {
-            fontSize:        'md',
-            color:           'text.primary',
-            borderBottomWidth: '1px',
-            borderColor:     'border.default',
+            fontSize:    'sm',
+            color:       'text.primary',
+            borderColor: 'border.default',
             px: '16px',
-            py: '10px',
+            py: 3,
           },
           tr: {
-            _even:  { bg: 'bg.surface' },
-            _odd:   { bg: 'bg.subtle' },
-            _hover: { bg: 'brand.50', cursor: 'default' },
+            _even:  { bg: 'bg.subtle' },
+            _odd:   { bg: 'bg.surface' },
+            _hover: { bg: 'brand.primaryLight', cursor: 'default', transition: 'background 0.15s' },
           },
+        },
+      },
+    },
+    Card: {
+      baseStyle: {
+        container: {
+          borderRadius: 'xl',
+          boxShadow:    'sm',
+          border:       '1px solid',
+          borderColor:  'border.default',
+          bg:           'bg.surface',
         },
       },
     },

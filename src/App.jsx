@@ -12,6 +12,7 @@ import {
   Spinner,
   Card,
   CardBody,
+  Center,
 } from '@chakra-ui/react'
 import TickerDropdown from './components/TickerDropdown'
 import DateRangePicker from './components/DateRangePicker'
@@ -33,81 +34,81 @@ function App() {
   }
 
   return (
-    <Box bg="bg.page" minH="100vh" py={8}>
-      <Container maxW="1200px" px={{ base: 3, md: 6 }}>
-        {/* Header */}
-        <VStack spacing={1} mb={8} textAlign="center">
-          <Heading as="h1" size="xl" fontWeight={700} color="text.primary" letterSpacing="-0.025em">
-            Cedears Monitor
-          </Heading>
-          <Text color="text.secondary" fontSize="md">
-            Historical price data for Argentine CEDEARs
-          </Text>
+    <Box bg="bg.page" minH="100vh">
+      {/* Gradient header */}
+      <Box bgGradient="linear(to-r, brand.primary, brand.primaryDark)" py={6} px={8} mb={8}>
+        <Flex align="center" gap={3} maxW="1200px" mx="auto">
+          <Text fontSize="3xl" lineHeight="1">📈</Text>
+          <Box>
+            <Heading color="white" size="lg" fontWeight="700">Cedears Monitor</Heading>
+            <Text color="whiteAlpha.800" fontSize="sm">Cotizaciones en tiempo real</Text>
+          </Box>
+        </Flex>
+      </Box>
+
+      <Container maxW="1200px" px={{ base: 4, md: 8 }} pb={12}>
+        <VStack spacing={6} align="stretch">
+          {/* Controls */}
+          <Card>
+            <CardBody>
+              <Flex direction={{ base: 'column', md: 'row' }} gap={4} align={{ md: 'flex-end' }}>
+                <TickerDropdown value={ticker} onChange={setTicker} />
+                <DateRangePicker
+                  dateFrom={dateFrom}
+                  dateTo={dateTo}
+                  onDateFromChange={setDateFrom}
+                  onDateToChange={setDateTo}
+                />
+                <Button
+                  onClick={handleConsultar}
+                  isDisabled={!ticker || loading}
+                  isLoading={loading}
+                  loadingText="Cargando..."
+                  alignSelf={{ base: 'stretch', md: 'flex-end' }}
+                >
+                  Consultar
+                </Button>
+              </Flex>
+            </CardBody>
+          </Card>
+
+          {/* Error */}
+          {error && (
+            <Alert status="error" borderRadius="xl">
+              <AlertIcon />
+              {error}
+            </Alert>
+          )}
+
+          {/* Loading */}
+          {loading && data.length === 0 && (
+            <Center py={16}>
+              <VStack spacing={3}>
+                <Spinner size="xl" color="brand.primary" thickness="4px" speed="0.65s" />
+                <Text color="text.secondary" fontSize="sm">Cargando datos...</Text>
+              </VStack>
+            </Center>
+          )}
+
+          {/* Results */}
+          {data.length > 0 && !loading && (
+            <>
+              <Card>
+                <CardBody>
+                  <Heading size="md" mb={4}>📈 {ticker} — Histórico de Precios</Heading>
+                  <PriceChart data={data} ticker={ticker} />
+                </CardBody>
+              </Card>
+
+              <Card>
+                <CardBody>
+                  <Heading size="md" mb={4}>📊 Datos OHLC</Heading>
+                  <DataTable data={data} />
+                </CardBody>
+              </Card>
+            </>
+          )}
         </VStack>
-
-        {/* Controls */}
-        <Card bg="bg.surface" boxShadow="card" borderRadius="lg" mb={6}>
-          <CardBody>
-            <Flex wrap="wrap" align="flex-end" gap={4}>
-              <TickerDropdown value={ticker} onChange={setTicker} />
-              <DateRangePicker
-                dateFrom={dateFrom}
-                dateTo={dateTo}
-                onDateFromChange={setDateFrom}
-                onDateToChange={setDateTo}
-              />
-              <Button
-                onClick={handleConsultar}
-                isDisabled={!ticker || loading}
-                isLoading={loading}
-                loadingText="Loading..."
-                colorScheme="brand"
-                size="md"
-                alignSelf="flex-end"
-              >
-                Consultar
-              </Button>
-            </Flex>
-          </CardBody>
-        </Card>
-
-        {/* Error */}
-        {error && (
-          <Alert status="error" borderRadius="md" mb={6}>
-            <AlertIcon />
-            {error}
-          </Alert>
-        )}
-
-        {/* Loading (full-page spinner when no data yet) */}
-        {loading && data.length === 0 && (
-          <Flex justify="center" py={16}>
-            <Spinner size="xl" color="brand.500" thickness="4px" />
-          </Flex>
-        )}
-
-        {/* Results */}
-        {data.length > 0 && (
-          <VStack spacing={6} align="stretch">
-            <Card bg="bg.surface" boxShadow="card" borderRadius="lg">
-              <CardBody>
-                <Text fontSize="lg" fontWeight={600} color="text.primary" mb={4}>
-                  {ticker} — Histórico de Precios
-                </Text>
-                <PriceChart data={data} ticker={ticker} />
-              </CardBody>
-            </Card>
-
-            <Card bg="bg.surface" boxShadow="card" borderRadius="lg">
-              <CardBody>
-                <Text fontSize="lg" fontWeight={600} color="text.primary" mb={4}>
-                  Datos OHLC
-                </Text>
-                <DataTable data={data} />
-              </CardBody>
-            </Card>
-          </VStack>
-        )}
       </Container>
     </Box>
   )

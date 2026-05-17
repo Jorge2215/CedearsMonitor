@@ -81,6 +81,49 @@ Requirements:
 - Add a loading spinner when fetching data.
 - Ensure responsiveness and accessibility across devices.
 
+## Tercer Prompt
+
+# Cedears Monitor - Visual Enhancement Prompt
+
+## Objective
+Transform the current Cedears Monitor app into a visually modern, attractive, and user-friendly experience.  
+The goal is to move beyond the "beta look" and deliver a polished interface that inspires confidence and enjoyment.
+
+## Requirements
+
+### 1. UI Framework
+- Integrate a modern UI framework:
+  - **Material UI (MUI)** or **Chakra UI** (preferred).
+  - Alternatively, **Tailwind CSS** for flexible styling.
+
+### 2. Color Palette
+- Use a **light, clean background** (white or very light gray).
+- Apply **bright, cheerful primary colors** (turquoise, lime green, coral).
+- Add **pastel secondary accents** (lavender, yellow, soft pink).
+- Ensure good contrast and accessibility.
+
+### 3. Typography
+- Adopt a modern, readable font (e.g., *Inter*, *Roboto*, *Poppins*).
+- Use consistent sizes and weights for headings, labels, and body text.
+
+### 4. Components Styling
+- **Buttons**: rounded corners, vibrant colors, hover effects.
+- **Table**: striped rows with soft alternating colors, hover highlight, styled header with primary color.
+- **Chart**: gradient line colors, smooth animations, clear tooltips.
+- **Loading state**: add a spinner or progress bar with modern animation.
+
+### 5. Layout & Identity
+- Add a **header bar** with the app name and optional logo/icon.
+- Ensure responsive design across desktop, tablet, and mobile.
+- Maintain a clean, minimalistic layout with spacing and alignment.
+
+## Deliverables
+- Updated UI integrated with chosen framework.
+- Consistent color theme applied across all components.
+- Enhanced user experience with loading indicators and animations.
+- Responsive design validated on multiple screen sizes.
+
+
 
 ## Squad Resume
 copilot --resume=72cf2c74-876d-4f62-b44b-e64f3df35866
