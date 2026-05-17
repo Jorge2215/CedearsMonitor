@@ -1,4 +1,4 @@
-# Cedears Monitor by Jorgito
+# Cedears Monitor by Jorgito and Toru Okada
 
 A responsive web application for analyzing the historical price evolution of CEDEARs — Argentine certificates of foreign stocks.
 
