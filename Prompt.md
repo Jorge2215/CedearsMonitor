@@ -66,3 +66,21 @@ Each record contains:
   - `dev` deploys to staging.
   - Automated tests must run before deployment.
 - Commit convention: use prefixes (`feat:`, `fix:`, `docs:`).
+
+## Segundo Prompt - Mejorando la UI
+## Visual Enhancement Request
+
+Objective:
+Improve the visual design of Cedears Monitor to make it more modern, clean, and attractive.
+
+Requirements:
+- Integrate a UI framework (Material UI or Chakra UI preferred).
+- Apply a light color palette (white background, pastel accents, modern typography).
+- Style the Grid/Table with alternating row colors and hover effects.
+- Enhance the Line Chart with gradient colors and clear tooltips.
+- Add a loading spinner when fetching data.
+- Ensure responsiveness and accessibility across devices.
+
+
+## Squad Resume
+copilot --resume=72cf2c74-876d-4f62-b44b-e64f3df35866

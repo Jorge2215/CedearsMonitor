@@ -1,11 +1,21 @@
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import { FormControl, FormLabel, HStack } from '@chakra-ui/react'
 
 export default function DateRangePicker({ dateFrom, dateTo, onDateFromChange, onDateToChange }) {
   return (
-    <div className="date-range-picker">
-      <div className="date-field">
-        <label>From</label>
+    <HStack spacing={3} wrap="wrap">
+      <FormControl w="auto">
+        <FormLabel
+          fontSize="sm"
+          fontWeight={600}
+          color="text.secondary"
+          textTransform="uppercase"
+          letterSpacing="0.04em"
+          mb={1}
+        >
+          From
+        </FormLabel>
         <DatePicker
           selected={dateFrom}
           onChange={onDateFromChange}
@@ -15,9 +25,18 @@ export default function DateRangePicker({ dateFrom, dateTo, onDateFromChange, on
           maxDate={dateTo}
           dateFormat="dd/MM/yyyy"
         />
-      </div>
-      <div className="date-field">
-        <label>To</label>
+      </FormControl>
+      <FormControl w="auto">
+        <FormLabel
+          fontSize="sm"
+          fontWeight={600}
+          color="text.secondary"
+          textTransform="uppercase"
+          letterSpacing="0.04em"
+          mb={1}
+        >
+          To
+        </FormLabel>
         <DatePicker
           selected={dateTo}
           onChange={onDateToChange}
@@ -28,7 +47,8 @@ export default function DateRangePicker({ dateFrom, dateTo, onDateFromChange, on
           maxDate={new Date()}
           dateFormat="dd/MM/yyyy"
         />
-      </div>
-    </div>
+      </FormControl>
+    </HStack>
   )
 }
+

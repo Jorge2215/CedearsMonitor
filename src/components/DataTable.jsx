@@ -1,3 +1,14 @@
+import {
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  TableContainer,
+  Text,
+} from '@chakra-ui/react'
+
 export default function DataTable({ data }) {
   const formatPrice = (val) => {
     if (val === null || val === undefined) return '—'
@@ -7,40 +18,45 @@ export default function DataTable({ data }) {
   const sorted = data ? [...data].sort((a, b) => new Date(a.date) - new Date(b.date)) : []
 
   return (
-    <div className="data-table-container">
+    <>
       {sorted.length > 0 && (
-        <p className="results-count">Showing {sorted.length} records</p>
+        <Text fontSize="sm" color="text.secondary" mb={3}>
+          Showing {sorted.length} records
+        </Text>
       )}
-      <div className="table-scroll">
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Open</th>
-              <th>High</th>
-              <th>Low</th>
-              <th>Close</th>
-            </tr>
-          </thead>
-          <tbody>
+      <TableContainer>
+        <Table variant="cedear" size="sm">
+          <Thead>
+            <Tr>
+              <Th>Fecha</Th>
+              <Th>Apertura</Th>
+              <Th>Máximo</Th>
+              <Th>Mínimo</Th>
+              <Th>Cierre</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
             {sorted.length === 0 ? (
-              <tr>
-                <td colSpan={5} className="no-data">No data available for the selected period.</td>
-              </tr>
+              <Tr>
+                <Td colSpan={5} textAlign="center" color="text.secondary" fontStyle="italic" py={8}>
+                  No data available for the selected period.
+                </Td>
+              </Tr>
             ) : (
-              sorted.map((row, i) => (
-                <tr key={row.date} className={i % 2 === 0 ? 'row-even' : 'row-odd'}>
-                  <td>{row.date}</td>
-                  <td>{formatPrice(row.o)}</td>
-                  <td>{formatPrice(row.h)}</td>
-                  <td>{formatPrice(row.l)}</td>
-                  <td>{formatPrice(row.c)}</td>
-                </tr>
+              sorted.map((row) => (
+                <Tr key={row.date}>
+                  <Td>{row.date}</Td>
+                  <Td>{formatPrice(row.o)}</Td>
+                  <Td>{formatPrice(row.h)}</Td>
+                  <Td>{formatPrice(row.l)}</Td>
+                  <Td>{formatPrice(row.c)}</Td>
+                </Tr>
               ))
             )}
-          </tbody>
-        </table>
-      </div>
-    </div>
+          </Tbody>
+        </Table>
+      </TableContainer>
+    </>
   )
 }
+

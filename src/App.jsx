@@ -1,5 +1,18 @@
 import { useState } from 'react'
-import './App.css'
+import {
+  Box,
+  Container,
+  Flex,
+  VStack,
+  Heading,
+  Text,
+  Button,
+  Alert,
+  AlertIcon,
+  Spinner,
+  Card,
+  CardBody,
+} from '@chakra-ui/react'
 import TickerDropdown from './components/TickerDropdown'
 import DateRangePicker from './components/DateRangePicker'
 import DataTable from './components/DataTable'
@@ -20,39 +33,85 @@ function App() {
   }
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <h1>Cedears Monitor</h1>
-        <p className="app-subtitle">Historical price data for Argentine CEDEARs</p>
-      </header>
+    <Box bg="bg.page" minH="100vh" py={8}>
+      <Container maxW="1200px" px={{ base: 3, md: 6 }}>
+        {/* Header */}
+        <VStack spacing={1} mb={8} textAlign="center">
+          <Heading as="h1" size="xl" fontWeight={700} color="text.primary" letterSpacing="-0.025em">
+            Cedears Monitor
+          </Heading>
+          <Text color="text.secondary" fontSize="md">
+            Historical price data for Argentine CEDEARs
+          </Text>
+        </VStack>
 
-      <section className="app-controls">
-        <TickerDropdown value={ticker} onChange={setTicker} />
-        <DateRangePicker
-          dateFrom={dateFrom}
-          dateTo={dateTo}
-          onDateFromChange={setDateFrom}
-          onDateToChange={setDateTo}
-        />
-        <button
-          className="btn-consultar"
-          onClick={handleConsultar}
-          disabled={!ticker || loading}
-        >
-          {loading ? 'Loading...' : 'Consultar'}
-        </button>
-      </section>
+        {/* Controls */}
+        <Card bg="bg.surface" boxShadow="card" borderRadius="lg" mb={6}>
+          <CardBody>
+            <Flex wrap="wrap" align="flex-end" gap={4}>
+              <TickerDropdown value={ticker} onChange={setTicker} />
+              <DateRangePicker
+                dateFrom={dateFrom}
+                dateTo={dateTo}
+                onDateFromChange={setDateFrom}
+                onDateToChange={setDateTo}
+              />
+              <Button
+                onClick={handleConsultar}
+                isDisabled={!ticker || loading}
+                isLoading={loading}
+                loadingText="Loading..."
+                colorScheme="brand"
+                size="md"
+                alignSelf="flex-end"
+              >
+                Consultar
+              </Button>
+            </Flex>
+          </CardBody>
+        </Card>
 
-      {error && <div className="app-error">{error}</div>}
+        {/* Error */}
+        {error && (
+          <Alert status="error" borderRadius="md" mb={6}>
+            <AlertIcon />
+            {error}
+          </Alert>
+        )}
 
-      {data.length > 0 && (
-        <section className="app-results">
-          <PriceChart data={data} ticker={ticker} />
-          <DataTable data={data} />
-        </section>
-      )}
-    </div>
+        {/* Loading (full-page spinner when no data yet) */}
+        {loading && data.length === 0 && (
+          <Flex justify="center" py={16}>
+            <Spinner size="xl" color="brand.500" thickness="4px" />
+          </Flex>
+        )}
+
+        {/* Results */}
+        {data.length > 0 && (
+          <VStack spacing={6} align="stretch">
+            <Card bg="bg.surface" boxShadow="card" borderRadius="lg">
+              <CardBody>
+                <Text fontSize="lg" fontWeight={600} color="text.primary" mb={4}>
+                  {ticker} — Histórico de Precios
+                </Text>
+                <PriceChart data={data} ticker={ticker} />
+              </CardBody>
+            </Card>
+
+            <Card bg="bg.surface" boxShadow="card" borderRadius="lg">
+              <CardBody>
+                <Text fontSize="lg" fontWeight={600} color="text.primary" mb={4}>
+                  Datos OHLC
+                </Text>
+                <DataTable data={data} />
+              </CardBody>
+            </Card>
+          </VStack>
+        )}
+      </Container>
+    </Box>
   )
 }
 
 export default App
+

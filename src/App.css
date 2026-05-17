@@ -1,8 +1,13 @@
-.app {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px 16px;
+/* App.css — legacy layout rules kept for compatibility during Chakra migration.
+   Most styling is now handled by Chakra UI components and the custom theme. */
+
+/* Responsive datepicker width on mobile */
+@media (max-width: 768px) {
+  .date-range-picker {
+    flex-direction: column;
+  }
 }
+
 
 /* ── Header ── */
 .app-header {

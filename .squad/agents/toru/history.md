@@ -34,8 +34,8 @@
 - Architecture decision documented in `.squad/decisions/inbox/toru-react-vite-architecture.md`
 
 
-### 2026-05-16: Azure SWA blank screen � skip_app_build diagnosis and fix
-- Key finding: skip_app_build: true with output_location: "dist" does NOT upload from dist/ � it uploads from pp_location (repo root), serving the raw dev index.html.
+### 2026-05-16: Azure SWA blank screen � skip_app_build diagnosis and fix
+- Key finding: skip_app_build: true with output_location: "dist" does NOT upload from dist/ � it uploads from pp_location (repo root), serving the raw dev index.html.
 - Fix: Remove skip_app_build: true and the manual Node.js setup / 
 pm ci / 
 pm run build steps. Let the Azure SWA Oryx builder auto-detect Node.js/Vite, run 
@@ -45,3 +45,14 @@ pm run build, and deploy from output_location: "dist".
 - Action: Removed `skip_app_build: true` and allowed Oryx to build the Vite app. Commit 6eb7761 was pushed to dev and merged to main.
 - Verification: CI/CD redeployment started; live site: https://kind-coast-09b59f110.7.azurestaticapps.net/
 - Notes: Coordinator diagnosed root cause (skip_app_build behavior) and monitored run #13.
+
+
+### 2026-05-16T21:57:45-03:00: UI Framework Decision — Chakra UI v2 selected (toru)
+- **Decision:** Chakra UI v2 over MUI v5.
+- **Primary reason:** Bundle size. Recharts already triggers a chunk size warning. Chakra adds ~100 KB; MUI adds ~300 KB. Total budget matters for a deployed Azure Static Web App.
+- **DatePicker:** Keep `react-datepicker` (already installed). Neither framework justifies replacing it — MUI's `@mui/x-date-pickers` would add yet another +70 KB.
+- **Theme:** Pastel light palette. Primary `#3B82F6`, background `#F8FAFC`, surface `#FFFFFF`, subtle `#F1F5F9`. Full token set in `.squad/decisions/inbox/toru-ui-framework.md`.
+- **Component mapping:** TickerDropdown → Chakra `Select`; Loading → Chakra `Spinner` / `Button isLoading`; Error → Chakra `Alert`; DataTable → Chakra `Table` with `cedear` variant; PriceChart → keep Recharts, add gradient + custom tooltip.
+- **Key gotchas for Creta:** ChakraProvider CSS reset conflicts with index.css (remove duplicate resets); react-datepicker z-index needs `z-index: 1400` override; framer-motion ESM may need `optimizeDeps` in vite.config.js; update Vitest tests from CSS class selectors to ARIA role selectors.
+- **Install:** `npm install @chakra-ui/react @emotion/react @emotion/styled framer-motion`
+- **Decision doc:** `.squad/decisions/inbox/toru-ui-framework.md`
