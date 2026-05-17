@@ -20,9 +20,11 @@ describe('PriceChart', () => {
     // Should not throw
   })
 
-  it('shows the ticker name in the chart title or heading', () => {
+  it('renders chart area when data is provided (ticker title now lives in App)', () => {
     render(<PriceChart data={mockData} ticker="MSFT" />)
-    expect(screen.getByText(/MSFT/i)).toBeInTheDocument()
+    // PriceChart no longer renders a ticker heading — that responsibility
+    // moved to App.jsx. Chart renders its area chart, not the no-data message.
+    expect(screen.queryByText(/no chart data available/i)).not.toBeInTheDocument()
   })
 
   it('handles empty data gracefully', () => {

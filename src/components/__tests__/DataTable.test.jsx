@@ -8,13 +8,13 @@ const mockData = [
 ]
 
 describe('DataTable', () => {
-  it('renders table headers: Date, Open, High, Low, Close', () => {
+  it('renders table headers: Fecha, Apertura, Máximo, Mínimo, Cierre', () => {
     render(<DataTable data={mockData} />)
-    expect(screen.getByText(/date/i)).toBeInTheDocument()
-    expect(screen.getByText(/open/i)).toBeInTheDocument()
-    expect(screen.getByText(/high/i)).toBeInTheDocument()
-    expect(screen.getByText(/low/i)).toBeInTheDocument()
-    expect(screen.getByText(/close/i)).toBeInTheDocument()
+    expect(screen.getByText(/fecha/i)).toBeInTheDocument()
+    expect(screen.getByText(/apertura/i)).toBeInTheDocument()
+    expect(screen.getByText(/máximo/i)).toBeInTheDocument()
+    expect(screen.getByText(/mínimo/i)).toBeInTheDocument()
+    expect(screen.getByText(/cierre/i)).toBeInTheDocument()
   })
 
   it('renders a row for each data item', () => {
