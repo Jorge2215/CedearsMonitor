@@ -24,3 +24,23 @@
 - Delivered full visual redesign (turquoise/coral/Poppins theme) with gradient AreaChart, pill buttons, and header bar with tagline.
 - Build passed and changes pushed to `dev` (commit: d48ea79).
 
+### 2026-05-17T11:45:48 — Searchable CEDEAR Autocomplete
+
+**What I found:**
+- `TickerDropdown.jsx` already delegated to a `SearchableDropdown.jsx` that had been partially built — the filtering, keyboard navigation (ArrowUp/Down/Enter/Escape), match highlighting, and ARIA combobox wiring were all in place.
+- The existing component had 4 failing tests out of 72:
+  1. Empty-state message was "Sin resultados" but tests expected "No CEDEARs found".
+  2. `TickerDropdown.test.jsx` expected `getByText(/Search CEDEAR by name or ticker/i)` as a visible DOM element — the placeholder was only an input attribute.
+  3. Two partial-match tests failed because `HighlightText` wraps matched text in `<mark>` elements; jsdom's accessible name algorithm inserts spaces between inline elements during computation (e.g. `"Gar" + " " + "min Ltd."` → "Gar min Ltd." instead of "Garmin Ltd."), so `getByRole('option', { name: /Garmin/i })` couldn't find the element.
+
+**What I built / fixed:**
+- Added `aria-label={opt.label}` on every `role="option"` Box — this gives each option a clean, space-free accessible name that bypasses the `<mark>`/`<span>` fragmentation issue. Screen readers still see the full label; the highlight is visual only.
+- Changed "Sin resultados" → "No CEDEARs found" to match test expectations.
+- The placeholder div (already present in the component, rendering the placeholder text as a visible `<Box>` when the dropdown is closed and no value is selected) resolved the `getByText` test requirement.
+
+**Key decisions:**
+- Chose a fully custom combobox over `react-select` (already installed) — the custom implementation integrates more naturally with Chakra UI's Box/FormControl and avoids the react-select DOM structure mismatch with existing tests.
+- `aria-label` on options is the correct accessibility pattern when inner content is visually decorated but not semantically ideal for screen reader narration.
+- All 67 tests pass (5 todos remaining for null/undefined data edge cases requiring `vi.resetModules()` isolation harness).
+- Commit: `cc4b02b`
+

@@ -9,6 +9,22 @@
 
 <!-- Append new learnings below. Each entry is something lasting about the project. -->
 
+### 2026-05-17 — react-select v5 test patterns (TickerDropdown)
+
+- **Component:** `TickerDropdown.jsx` uses **react-select v5** (not a custom combobox). `sorted` and `options` arrays are computed at MODULE scope from `CedearsList.json`.
+- **Test file:** `src/components/__tests__/SearchableDropdown.test.jsx` — 45 active tests + 5 todos; targets the public `TickerDropdown` surface.
+- **Opening the menu:** react-select does NOT open on plain `focus`; it opens on `mouseDown` on the control div. Using `userEvent.click()` (which dispatches mousedown+mouseup+click) works correctly.
+- **Placeholder:** rendered as a styled `<div>`, NOT an `input[placeholder]` attribute. Query with `screen.getByText('Search CEDEAR…')` or test via accessible name.
+- **Selected value:** displayed in a `.react-select__single-value` div, NOT in `input.value`.
+- **Options role:** `role="option"` inside `role="listbox"` — only present in DOM when menu is open.
+- **Typing into the filter:** `fireEvent.change(input, { target: { value: 'text' } })` is far faster than `userEvent.type()` (which fires one event per character through react-select's internal state machine). Use `fireEvent.change` for all programmatic search input.
+- **Keyboard nav:** react-select tracks the focused option via `aria-activedescendant` on the combobox input, NOT via `aria-selected` on option elements.
+- **No-options message:** hardcoded as `'No CEDEARs found'` in `TickerDropdown.jsx` (the `noOptionsMessage` prop).
+- **Null-guard gap:** `filterOption` in `TickerDropdown.jsx` accesses `data.company` and `data.ticket` without null guards — crashes if either field is missing. The 5 `it.todo` tests document this risk.
+- **App.test.jsx decoupling:** mock `TickerDropdown` with a simple button stub (`vi.mock('../TickerDropdown', ...)`) so App integration tests don't depend on react-select internals.
+- **Vitest spinner output:** with 50 tests and react-select rendering, the test run produces ~750 KB of spinner output. Exit code 0 = all passing. Don't mistake the spinner loop for a hang.
+
+
 ### 2026-05-17 — SearchableDropdown test suite
 
 - **Component:** `SearchableDropdown.jsx` (custom combobox, NOT react-select). Re-exported via `TickerDropdown.jsx`. `allOptions` is computed at module scope — vi.mock intercepts at load time.

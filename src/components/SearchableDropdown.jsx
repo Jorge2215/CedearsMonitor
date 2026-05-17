@@ -106,8 +106,9 @@ export default function SearchableDropdown({ value, onChange }) {
   }
 
   function handleInputBlur() {
-    // Defer close so option clicks can fire first
-    setTimeout(close, 100)
+    // Immediately close — mousedown on listbox uses e.preventDefault() so clicks
+    // on options do not trigger blur; this path only runs on external blur (Tab, click-outside)
+    close()
   }
 
   function handleKeyDown(e) {

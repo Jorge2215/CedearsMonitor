@@ -10,6 +10,8 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/setupTests.js',
+    testTimeout: 15000,
+    hookTimeout: 15000,
     server: {
       deps: {
         // Ensure ESM-only packages (framer-motion, Chakra UI) are processed

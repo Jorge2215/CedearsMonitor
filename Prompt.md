@@ -1,4 +1,4 @@
-# Cedears Monitor - Prompt
+# Cedears Monitor - Prompt 1
 
 ## Role
 Act as a senior full-stack web developer specialized in React and modern cloud deployment practices, with deep experience in financial applications development.
@@ -67,7 +67,7 @@ Each record contains:
   - Automated tests must run before deployment.
 - Commit convention: use prefixes (`feat:`, `fix:`, `docs:`).
 
-## Segundo Prompt - Mejorando la UI
+## Prompt 2 - Mejorando la UI
 ## Visual Enhancement Request
 
 Objective:
@@ -81,7 +81,7 @@ Requirements:
 - Add a loading spinner when fetching data.
 - Ensure responsiveness and accessibility across devices.
 
-## Tercer Prompt
+## Prompt 3
 
 # Cedears Monitor - Visual Enhancement Prompt
 
@@ -122,6 +122,140 @@ The goal is to move beyond the "beta look" and deliver a polished interface that
 - Consistent color theme applied across all components.
 - Enhanced user experience with loading indicators and animations.
 - Responsive design validated on multiple screen sizes.
+
+## Prompt 4
+
+# Cedears Monitor - Dropdown Search Enhancement Prompt
+
+## Objective
+Improve the CEDEAR selection experience by adding a search capability to the dropdown list.  
+Users should be able to type part of the company name or ticker to quickly find the desired CEDEAR.
+
+## Requirements
+
+### 1. Dropdown Behavior
+- Replace the current static dropdown with a **searchable dropdown** (autocomplete).
+- Allow users to:
+  - Type part of the company name (e.g., "Garmin") or ticker (e.g., "GRMN").
+  - See filtered results dynamically as they type.
+  - Select the CEDEAR from the filtered list.
+
+### 2. UI Framework Integration
+- Use a modern UI component from the chosen framework:
+  - **Material UI**: `Autocomplete` component.
+  - **Chakra UI**: `Combobox` or `Select` with search.
+  - **Ant Design**: `Select` with `showSearch` enabled.
+
+### 3. User Experience
+- Maintain the current dropdown style (light, clean, modern).
+- Ensure accessibility: keyboard navigation (arrow keys, enter).
+- Provide clear placeholder text: *"Search CEDEAR by name or ticker..."*.
+- Highlight matching text in the results for clarity.
+
+### 4. Data Source
+- Continue using `CedearsList.json` as the source of tickers and companies.
+- Ensure filtering works on both fields: `"Ticket"` and `"Company"`.
+
+### 5. Responsiveness
+- Validate that the searchable dropdown works smoothly on desktop, tablet, and mobile.
+- Ensure no overlap or clipping with other UI elements.
+
+## Deliverables
+- Updated dropdown component with search functionality.
+- Integrated with existing CEDEAR list JSON.
+- Tested across devices for responsiveness and accessibility.
+
+
+## Prompt 5
+
+# Cedears Monitor - New Features Prompt
+
+## Objective
+Expand the capabilities of the Cedears Monitor application by adding:
+1. Data export to CSV/Excel.
+2. Technical indicators visualization on the historical chart.
+
+---
+
+## 1. Data Export
+
+### Requirements
+- Add a visible button in the interface: **"Export Data"**.
+- Allow exporting the data shown in the chart and table to:
+  - **CSV** (for quick analysis).
+  - **Excel (.xlsx)** (for spreadsheet use).
+- Include in the file:
+  - Date.
+  - Closing price.
+  - Volume (if available).
+- File name format: `Cedear_<Ticker>_<Date>.csv` or `.xlsx`.
+
+### User Experience
+- Place the button near the chart or table.
+- Show confirmation message: *"Data exported successfully"*.
+- In case of error, show a clear alert.
+
+---
+
+## 2. Technical Indicators
+
+### Requirements
+- Add an option to display **Simple Moving Average (SMA)** on the historical chart.
+- Initial configuration:
+  - 20-day SMA.
+  - 50-day SMA.
+- Display the lines in different colors (e.g., blue and green).
+- Allow enabling/disabling indicators via checkbox or toggle.
+
+### User Experience
+- The chart should update dynamically when indicators are toggled.
+- Keep visual clarity: smooth lines with a visible legend.
+- Ensure calculations are based on the same loaded data.
+
+---
+
+## Deliverables
+- Functional export button generating CSV/Excel files.
+- Chart with integrated and configurable technical indicators.
+- Validation on desktop and mobile.
+- Short documentation explaining how to use each new feature.
+
+
+## Orquestacion de un Prompt
+
+[1] Prompt inicial (Product Owner narrativo: vos)
+    └─> "Quiero agregar búsqueda en el dropdown de Cedears"
+
+[2] Copilot (Orquestador)
+    └─> Decide qué modelo usar según la tarea
+
+[3] Frontend Agent (GPT)
+    └─> Genera el componente React con dropdown + búsqueda
+    └─> Rápido, directo, scaffolding ágil
+
+[4] Data Agent (Gemini)
+    └─> Revisa estructura de datos
+    └─> Implementa exportación CSV/Excel
+    └─> Usa ventana de 1M tokens para analizar múltiples archivos
+
+[5] Analytics Agent (Gemini)
+    └─> Agrega indicadores técnicos (SMA, EMA)
+    └─> Integra cálculos en el gráfico
+
+[6] Testing Agent (Claude)
+    └─> Explica casos de prueba
+    └─> Documenta errores y soluciones con estilo pedagógico
+
+[7] DevOps Agent (GPT)
+    └─> Configura pipeline en Azure
+    └─> YAML para despliegue automático
+
+[8] Docs Agent (Claude)
+    └─> Genera README y guías claras
+    └─> Traduce lo técnico en narrativas comprensibles
+
+[9] Despliegue final (Copilot + Azure)
+    └─> Orquesta todo y asegura coherencia
 
 
 
