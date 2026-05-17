@@ -22,6 +22,11 @@
 - **Rule confirmed:** Any component test that renders Chakra UI components with custom theme tokens MUST use `render` from `test-utils.jsx`, not directly from `@testing-library/react`.
 - Outcome: 30/30 tests passing. Committed to `dev`.
 
+### 2026-05-16T22:36:58 — Visual redesign verification
+- Verified visual redesign changes and full test pass (30/30).
+- Fixed `App.test.jsx` import to use `test-utils` wrapper (ChakraProvider + custom theme).
+- Verification pushed to `dev`.
+
 ### 2026-05-16 — Test Strategy Established
 
 **Stack confirmed:** React 18 + Vite 5, Vitest + React Testing Library + jsdom, Recharts, fetch-based API client.

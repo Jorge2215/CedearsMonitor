@@ -20,3 +20,7 @@
 - Implemented TickerDropdown, DateRangePicker, DataTable, PriceChart, and responsive CSS variables. Ensured prop interfaces and empty/null handling align with test expectations.
 - Outcome: Components integrated and validated by tests.
 
+### 2026-05-16T22:36:58 — Visual redesign
+- Delivered full visual redesign (turquoise/coral/Poppins theme) with gradient AreaChart, pill buttons, and header bar with tagline.
+- Build passed and changes pushed to `dev` (commit: d48ea79).
+
