@@ -14,6 +14,14 @@
 - Outcome: All tests passing (30/30), enabling safe iteration in subsequent phases.
 
 
+### 2026-05-16 — Post-Redesign Test Fix (turquoise/coral theme)
+
+- Creta's visual redesign introduced custom Chakra UI theme tokens (`colors.brand.primary`, etc.).
+- `App.test.jsx` was importing `render` from `@testing-library/react` directly (no `ChakraProvider`), causing all 5 App tests to crash with `TypeError: Cannot use 'in' operator to search for 'colors.brand.primary' in undefined`.
+- Fix: import `render` from `../../test-utils` (which wraps with `ChakraProvider` + custom theme).
+- **Rule confirmed:** Any component test that renders Chakra UI components with custom theme tokens MUST use `render` from `test-utils.jsx`, not directly from `@testing-library/react`.
+- Outcome: 30/30 tests passing. Committed to `dev`.
+
 ### 2026-05-16 — Test Strategy Established
 
 **Stack confirmed:** React 18 + Vite 5, Vitest + React Testing Library + jsdom, Recharts, fetch-based API client.
