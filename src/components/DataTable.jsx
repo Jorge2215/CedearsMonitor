@@ -12,7 +12,7 @@ import {
 export default function DataTable({ data }) {
   const formatPrice = (val) => {
     if (val === null || val === undefined) return '—'
-    return Number(val).toFixed(2)
+    return `$ ${Number(val).toFixed(2)}`
   }
 
   const sorted = data ? [...data].sort((a, b) => new Date(a.date) - new Date(b.date)) : []
@@ -21,10 +21,10 @@ export default function DataTable({ data }) {
     <>
       {sorted.length > 0 && (
         <Text fontSize="sm" color="text.secondary" mb={3}>
-          Showing {sorted.length} records
+          {sorted.length} registros
         </Text>
       )}
-      <TableContainer>
+      <TableContainer overflowX="auto">
         <Table variant="cedear" size="sm">
           <Thead>
             <Tr>
@@ -49,7 +49,7 @@ export default function DataTable({ data }) {
                   <Td>{formatPrice(row.o)}</Td>
                   <Td>{formatPrice(row.h)}</Td>
                   <Td>{formatPrice(row.l)}</Td>
-                  <Td>{formatPrice(row.c)}</Td>
+                  <Td fontWeight="600" color="brand.primary">{formatPrice(row.c)}</Td>
                 </Tr>
               ))
             )}

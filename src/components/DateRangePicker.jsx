@@ -6,15 +6,8 @@ export default function DateRangePicker({ dateFrom, dateTo, onDateFromChange, on
   return (
     <HStack spacing={3} wrap="wrap">
       <FormControl w="auto">
-        <FormLabel
-          fontSize="sm"
-          fontWeight={600}
-          color="text.secondary"
-          textTransform="uppercase"
-          letterSpacing="0.04em"
-          mb={1}
-        >
-          From
+        <FormLabel fontSize="sm" fontWeight="600" color="text.secondary" mb={1}>
+          Desde
         </FormLabel>
         <DatePicker
           selected={dateFrom}
@@ -27,15 +20,8 @@ export default function DateRangePicker({ dateFrom, dateTo, onDateFromChange, on
         />
       </FormControl>
       <FormControl w="auto">
-        <FormLabel
-          fontSize="sm"
-          fontWeight={600}
-          color="text.secondary"
-          textTransform="uppercase"
-          letterSpacing="0.04em"
-          mb={1}
-        >
-          To
+        <FormLabel fontSize="sm" fontWeight="600" color="text.secondary" mb={1}>
+          Hasta
         </FormLabel>
         <DatePicker
           selected={dateTo}

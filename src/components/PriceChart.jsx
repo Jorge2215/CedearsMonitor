@@ -16,18 +16,21 @@ function CustomTooltip({ active, payload, label }) {
     <Box
       bg="white"
       border="1px solid"
-      borderColor="border.default"
-      borderRadius="sm"
+      borderColor="gray.100"
+      borderRadius="lg"
       p={3}
-      fontSize="sm"
-      boxShadow="card"
+      boxShadow="lg"
       lineHeight="1.7"
     >
-      <Text fontWeight={600} mb={1} color="text.primary">{label}</Text>
-      <Text color="brand.600">Close: <strong>{d?.c != null ? d.c.toFixed(2) : '—'}</strong></Text>
-      <Text color="text.secondary">Open: {d?.o != null ? d.o.toFixed(2) : '—'}</Text>
-      <Text color="text.secondary">High: {d?.h != null ? d.h.toFixed(2) : '—'}</Text>
-      <Text color="text.secondary">Low: {d?.l != null ? d.l.toFixed(2) : '—'}</Text>
+      <Text fontSize="xs" color="gray.500" mb={1}>{label}</Text>
+      <Text fontWeight="700" color="#06B6D4" fontSize="lg">
+        ${d?.c != null ? d.c.toFixed(2) : '—'}
+      </Text>
+      <Text fontSize="xs" color="gray.400">
+        O: {d?.o != null ? d.o.toFixed(2) : '—'} &nbsp;
+        H: {d?.h != null ? d.h.toFixed(2) : '—'} &nbsp;
+        L: {d?.l != null ? d.l.toFixed(2) : '—'}
+      </Text>
     </Box>
   )
 }
@@ -44,23 +47,23 @@ export default function PriceChart({ data, ticker }) {
   }
 
   return (
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width="100%" height={320}>
       <AreaChart data={chartData} margin={{ top: 8, right: 24, left: 8, bottom: 8 }}>
         <defs>
-          <linearGradient id="priceGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%"  stopColor="#3B82F6" stopOpacity={0.25} />
-            <stop offset="95%" stopColor="#3B82F6" stopOpacity={0} />
+          <linearGradient id="turquoiseGradient" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%"  stopColor="#06B6D4" stopOpacity={0.3} />
+            <stop offset="95%" stopColor="#06B6D4" stopOpacity={0} />
           </linearGradient>
         </defs>
         <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" />
         <XAxis
           dataKey="date"
-          tick={{ fontSize: 12, fill: '#64748B' }}
+          tick={{ fontSize: 12, fill: '#64748B', fontFamily: 'Poppins' }}
           interval="preserveStartEnd"
         />
         <YAxis
           tickFormatter={(v) => v.toFixed(2)}
-          tick={{ fontSize: 12, fill: '#64748B' }}
+          tick={{ fontSize: 12, fill: '#64748B', fontFamily: 'Poppins' }}
           domain={['auto', 'auto']}
           width={70}
         />
@@ -69,11 +72,12 @@ export default function PriceChart({ data, ticker }) {
           type="monotone"
           dataKey="c"
           name="Close"
-          stroke="#3B82F6"
-          strokeWidth={2}
-          fill="url(#priceGradient)"
+          stroke="#06B6D4"
+          strokeWidth={2.5}
+          fill="url(#turquoiseGradient)"
+          animationDuration={800}
           dot={false}
-          activeDot={{ r: 4, fill: '#3B82F6' }}
+          activeDot={{ r: 5, fill: '#06B6D4' }}
         />
       </AreaChart>
     </ResponsiveContainer>
