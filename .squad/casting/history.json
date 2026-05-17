@@ -1,0 +1,24 @@
+{
+  "universe_usage_history": [
+    {
+      "universe": "The Wind-Up Bird Chronicle",
+      "first_used": "2026-05-16",
+      "assignment_id": "cedearmonitor-001"
+    }
+  ],
+  "assignment_cast_snapshots": {
+    "cedearmonitor-001": {
+      "project": "CedearMonitor",
+      "universe": "The Wind-Up Bird Chronicle",
+      "cast_date": "2026-05-16",
+      "members": [
+        { "name": "Toru", "role": "Lead" },
+        { "name": "Cinnamon", "role": "Backend Dev" },
+        { "name": "Creta", "role": "Frontend Dev" },
+        { "name": "May", "role": "Tester" },
+        { "name": "Scribe", "role": "Session Logger" },
+        { "name": "Ralph", "role": "Work Monitor" }
+      ]
+    }
+  }
+}

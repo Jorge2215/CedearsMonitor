@@ -1,0 +1,46 @@
+{
+  "agents": {
+    "toru": {
+      "persistent_name": "Toru",
+      "universe": "The Wind-Up Bird Chronicle",
+      "created_at": "2026-05-16",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "cinnamon": {
+      "persistent_name": "Cinnamon",
+      "universe": "The Wind-Up Bird Chronicle",
+      "created_at": "2026-05-16",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "creta": {
+      "persistent_name": "Creta",
+      "universe": "The Wind-Up Bird Chronicle",
+      "created_at": "2026-05-16",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "may": {
+      "persistent_name": "May",
+      "universe": "The Wind-Up Bird Chronicle",
+      "created_at": "2026-05-16",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "scribe": {
+      "persistent_name": "Scribe",
+      "universe": "exempt",
+      "created_at": "2026-05-16",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "ralph": {
+      "persistent_name": "Ralph",
+      "universe": "exempt",
+      "created_at": "2026-05-16",
+      "legacy_named": false,
+      "status": "active"
+    }
+  }
+}
