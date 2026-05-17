@@ -9,6 +9,15 @@
 
 <!-- Append new learnings below. Each entry is something lasting about the project. -->
 
+### 2026-05-17 — SearchableDropdown test suite
+
+- **Component:** `SearchableDropdown.jsx` (custom combobox, NOT react-select). Re-exported via `TickerDropdown.jsx`. `allOptions` is computed at module scope — vi.mock intercepts at load time.
+- **Test file:** `src/components/__tests__/SearchableDropdown.test.jsx` — already existed as a stub; expanded to 50 tests (45 active + 5 todos).
+- **Sections added:** §12 ARIA attributes (aria-label, placeholder, aria-expanded lifecycle, listbox aria-label) and §13 Double-selection safety.
+- **Key gotcha — HighlightText accessible names:** The `HighlightText` component wraps matched text in `<mark>` elements. JSDOM's accessible name computation inserts a space between sibling DOM nodes, so `role="option" { name: /Garmin/i }` fails when "gar" is highlighted as `<mark>Gar</mark><span>min…</span>`. Tests that rely on full-string accessible names must use a term that is highlighted as a complete token (e.g., query="Garmin" highlights the whole word and the accessible name is clean). Short partial queries ("gar", "alph") produce split nodes — tests for those groups use `{ name: /GRMN/i }` (matching the unhighlighted ticker part) to avoid this issue.
+- **Key gotcha — blur-timer race in double-selection tests:** `handleInputBlur` uses `setTimeout(close, 100)`. In tests that simulate two sequential selections, re-opening with `userEvent.click` can race against the pending 100ms timer. Use `fireEvent.focus` (synchronous) for the re-open step to avoid this.
+- **5 remaining todos:** null/undefined Ticket or Company fields in data — require `vi.resetModules()` + `vi.doMock()` per test because `allOptions` is module-scoped. Deferred to avoid test suite hangs from re-importing heavy deps.
+
 ### 2026-05-16: Phase 1 testing completion
 - Authored comprehensive test suite (30 tests) across service, hook, components, and integration. Tests cover financial edge cases and environment constraints.
 - Outcome: All tests passing (30/30), enabling safe iteration in subsequent phases.

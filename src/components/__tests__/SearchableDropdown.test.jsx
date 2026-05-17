@@ -1,7 +1,8 @@
 /**
- * Tests for the searchable CEDEAR selector (TickerDropdown, powered by react-select).
+ * Tests for the searchable CEDEAR selector (custom combobox — SearchableDropdown.jsx,
+ * re-exported via TickerDropdown.jsx).
  *
- * Component: src/components/TickerDropdown.jsx
+ * Component: src/components/TickerDropdown.jsx → SearchableDropdown.jsx
  * Contract:  <TickerDropdown value={string} onChange={fn(ticket: string)} />
  *
  * Rendering:
@@ -422,5 +423,78 @@ describe('SearchableDropdown — special characters in search', () => {
     // Use fireEvent to avoid userEvent simulating 200 individual keystrokes
     fireEvent.change(input, { target: { value: 'A'.repeat(200) } })
     expect(screen.queryByRole('combobox')).toBeInTheDocument()
+  })
+})
+
+// ---------------------------------------------------------------------------
+// 12. ARIA / accessibility attributes
+// ---------------------------------------------------------------------------
+describe('SearchableDropdown — ARIA attributes', () => {
+  it('input has aria-label "CEDEAR search"', () => {
+    setup()
+    expect(screen.getByLabelText('CEDEAR search')).toBeInTheDocument()
+  })
+
+  it('input has placeholder "Search CEDEAR by name or ticker..."', () => {
+    setup()
+    expect(
+      screen.getByPlaceholderText('Search CEDEAR by name or ticker...'),
+    ).toBeInTheDocument()
+  })
+
+  it('aria-expanded is false when listbox is closed', () => {
+    setup()
+    expect(screen.getByRole('combobox')).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('aria-expanded is true when listbox is open', async () => {
+    const { user } = setup()
+    await user.click(screen.getByRole('combobox'))
+    expect(screen.getByRole('combobox')).toHaveAttribute('aria-expanded', 'true')
+  })
+
+  it('aria-expanded returns to false after Escape', async () => {
+    const { user } = setup()
+    await user.click(screen.getByRole('combobox'))
+    await user.keyboard('{Escape}')
+    expect(screen.getByRole('combobox')).toHaveAttribute('aria-expanded', 'false')
+  })
+
+  it('listbox has aria-label "CEDEARs"', async () => {
+    const { user } = setup()
+    await user.click(screen.getByRole('combobox'))
+    expect(screen.getByRole('listbox')).toHaveAttribute('aria-label', 'CEDEARs')
+  })
+})
+
+// ---------------------------------------------------------------------------
+// 13. Double-selection and idempotency
+// ---------------------------------------------------------------------------
+describe('SearchableDropdown — double-selection safety', () => {
+  it('selecting the same item twice calls onChange twice without crashing', async () => {
+    const { user, onChange } = setup()
+    const input = screen.getByRole('combobox')
+
+    // First selection
+    await user.click(input)
+    fireEvent.change(input, { target: { value: 'GRMN' } })
+    await user.click(screen.getByRole('option', { name: /GRMN/i }))
+    expect(onChange).toHaveBeenCalledTimes(1)
+
+    // Re-open via focus (avoids blur-timer race from the previous click)
+    fireEvent.focus(input)
+    fireEvent.change(input, { target: { value: 'GRMN' } })
+    await user.click(screen.getByRole('option', { name: /GRMN/i }))
+    expect(onChange).toHaveBeenCalledTimes(2)
+    expect(onChange).toHaveBeenNthCalledWith(2, 'GRMN')
+  })
+
+  it('selecting with value already set still calls onChange with the ticket', async () => {
+    const { user, onChange } = setup({ value: 'GOOGL' })
+    const input = screen.getByRole('combobox')
+    await user.click(input)
+    fireEvent.change(input, { target: { value: 'GRMN' } })
+    await user.click(screen.getByRole('option', { name: /GRMN/i }))
+    expect(onChange).toHaveBeenCalledWith('GRMN')
   })
 })
