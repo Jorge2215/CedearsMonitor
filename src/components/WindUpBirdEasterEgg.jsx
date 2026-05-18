@@ -10,7 +10,8 @@ import {
 } from '@chakra-ui/react'
 import windUpBirdImg from '../../Images/WindupBird.jpg'
 
-const WIND_UP_BIRD_QUOTE = '[ Insert quote here ]'
+// TODO: Replace the placeholder below with the passage from The Wind-Up Bird Chronicle (Haruki Murakami)
+const WIND_UP_BIRD_QUOTE = `[ The point is, not to resist the flow. You go up when you're supposed to go up and down when you're supposed to go down. When you're supposed to go up, find the highest tower and climb to the top. When you're supposed to go down, find the deepest well and go down to the bottom. When there's no flow, stay still. If you resist the flow, everything dries up. If everything dries up, the world is darkness ]`
 
 function WindUpBirdEasterEgg() {
   const { isOpen, onOpen, onClose } = useDisclosure()
