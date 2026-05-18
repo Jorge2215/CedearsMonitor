@@ -68,3 +68,15 @@
 ### 2026-05-17T23:42:26Z — Export feature merged
 - ExportButton.jsx implemented, commit ea02a3c. CSV + Excel export added. Known gaps: volume column, filename sanitization.
 
+
+### 2026-05-17T21:04:24 - Wind-Up Bird Chronicle Easter Egg
+
+**Image path:** `Images/WindupBird.jpg` lives at the repo root (not `public/`). Imported as a Vite module asset -- Vite fingerprints and bundles it automatically. No `public/` directory exists in this project.
+
+**Header integration:** Added `width="100%"` to the header `<Flex>` so `ml="auto"` on the image correctly pushes it to the right edge. `WindUpBirdEasterEgg` is a Fragment component (Image + Modal) -- it slots cleanly as the last child of the Flex.
+
+**Chakra UI v2 Modal pattern:** `useDisclosure()` returns `{ isOpen, onOpen, onClose }`. Modal composition: `<Modal> + <ModalOverlay /> + <ModalContent> + <ModalCloseButton /> + <ModalBody>`. Idiomatic Chakra v2 pattern; no ModalHeader needed for a styled quote.
+
+**Quote constant:** Named `WIND_UP_BIRD_QUOTE` at line 5 of `WindUpBirdEasterEgg.jsx`, marked with `// QUOTE_PLACEHOLDER` comment. Jorge can find-and-replace in one place.
+
+**Build:** 2178 modules, image bundled as `WindupBird-BxjFF9W3.jpg` in `dist/assets/`. No errors.

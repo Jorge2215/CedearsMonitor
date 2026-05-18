@@ -19,6 +19,7 @@ import DateRangePicker from './components/DateRangePicker'
 import DataTable from './components/DataTable'
 import PriceChart from './components/PriceChart'
 import ExportButton from './components/ExportButton'
+import WindUpBirdEasterEgg from './components/WindUpBirdEasterEgg'
 import { useCedearData } from './hooks/useCedearData'
 
 function App() {
@@ -38,12 +39,13 @@ function App() {
     <Box bg="bg.page" minH="100vh">
       {/* Gradient header */}
       <Box bgGradient="linear(to-r, brand.primary, brand.primaryDark)" py={6} px={8} mb={8}>
-        <Flex align="center" gap={3} maxW="1200px" mx="auto">
+        <Flex align="center" gap={3} maxW="1200px" mx="auto" width="100%">
           <Text fontSize="3xl" lineHeight="1">📈</Text>
           <Box>
             <Heading color="white" size="lg" fontWeight="700">Cedears Monitor</Heading>
             <Text color="whiteAlpha.800" fontSize="sm">Cotizaciones en tiempo real</Text>
           </Box>
+          <WindUpBirdEasterEgg />
         </Flex>
       </Box>
 
