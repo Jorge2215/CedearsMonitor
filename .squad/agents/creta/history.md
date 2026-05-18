@@ -7,6 +7,9 @@
 
 ## Learnings
 
+### 2026-05-17 â€” JSX String Handling
+- When a string contains an apostrophe (e.g., literary quotes), use a backtick template literal instead of single quotes in JSX. This avoids syntax errors and ensures the string renders correctly in the component. (Lesson from WindUpBirdEasterEgg.jsx)
+
 ### 2026-05-16 â€” Component architecture decisions
 
 - **TickerDropdown**: Imports `CedearsList.json` directly as a static asset. Options are sorted alphabetically by `Company` at render time using `Array.sort` + `localeCompare`. No need for memo since the list is static.
@@ -46,7 +49,7 @@
 
 
 
-### 2026-05-17T15:03:55Z — SearchableDropdown implemented
+### 2026-05-17T15:03:55Z ï¿½ SearchableDropdown implemented
 - Implemented SearchableDropdown.jsx (custom combobox). Filtering on Ticket and Company, keyboard navigation (Arrow keys, Enter, Escape), match highlighting, aria-label on options to fix accessible-name fragmentation.
 - Fixed 4 failing tests; all tests passing. Commit: cc4b02b
 
@@ -65,7 +68,7 @@
 - Placed in DataTable card header using `Flex justify=space-between`. File naming: `Cedear_<Ticker>_<YYYY-MM-DD>.<ext>`.
 - Build passed (2176 modules). Commit: a6868ce.
 
-### 2026-05-17T23:42:26Z — Export feature merged
+### 2026-05-17T23:42:26Z ï¿½ Export feature merged
 - ExportButton.jsx implemented, commit ea02a3c. CSV + Excel export added. Known gaps: volume column, filename sanitization.
 
 
