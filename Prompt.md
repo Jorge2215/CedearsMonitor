@@ -173,9 +173,6 @@ Users should be able to type part of the company name or ticker to quickly find 
 ## Objective
 Expand the capabilities of the Cedears Monitor application by adding:
 1. Data export to CSV/Excel.
-2. Technical indicators visualization on the historical chart.
-
----
 
 ## 1. Data Export
 
@@ -195,67 +192,50 @@ Expand the capabilities of the Cedears Monitor application by adding:
 - Show confirmation message: *"Data exported successfully"*.
 - In case of error, show a clear alert.
 
----
-
-## 2. Technical Indicators
-
-### Requirements
-- Add an option to display **Simple Moving Average (SMA)** on the historical chart.
-- Initial configuration:
-  - 20-day SMA.
-  - 50-day SMA.
-- Display the lines in different colors (e.g., blue and green).
-- Allow enabling/disabling indicators via checkbox or toggle.
-
-### User Experience
-- The chart should update dynamically when indicators are toggled.
-- Keep visual clarity: smooth lines with a visible legend.
-- Ensure calculations are based on the same loaded data.
-
----
 
 ## Deliverables
 - Functional export button generating CSV/Excel files.
-- Chart with integrated and configurable technical indicators.
 - Validation on desktop and mobile.
 - Short documentation explaining how to use each new feature.
 
+## Prompt 6
 
-## Orquestacion de un Prompt
+# Hidden message
+Objective:
+Add an allegorical functionality to the Cedears Monitor application:
+- Display a circular image (2.5 cm diameter) on the top blue bar, aligned to the right.
+- When the user performs a double click on the image, show a visually pleasant card containing a paragraph from Haruki Murakami's novel "The Wind-Up Bird Chronicle."
 
-[1] Prompt inicial (Product Owner narrativo: vos)
-    └─> "Quiero agregar búsqueda en el dropdown de Cedears"
+Squad Tasks:
+1. Circular Image:
+   - Use the image stored in the \Images folder of the local repository with name "WindupBird.jpg"
+   - Render it as a circle using CSS (border-radius: 50%, fixed size 2.5 cm).
+   - Position it on the top blue bar, aligned to the right.
 
-[2] Copilot (Orquestador)
-    └─> Decide qué modelo usar según la tarea
+2. Double Click Event:
+   - Implement a double click listener on the image.
+   - When triggered, display a card (modal or floating div) with the following text:
 
-[3] Frontend Agent (GPT)
-    └─> Genera el componente React con dropdown + búsqueda
-    └─> Rápido, directo, scaffolding ágil
+     “The point is, not to resist the flow. You go up when you're supposed to go up and down when you're supposed to go down. When you're supposed to go up, find the highest tower and climb to the top. When you're supposed to go down, find the deepest well and go down to the bottom. When there's no flow, stay still. If you resist the flow, everything dries up. If everything dries up, the world is darkness.”
 
-[4] Data Agent (Gemini)
-    └─> Revisa estructura de datos
-    └─> Implementa exportación CSV/Excel
-    └─> Usa ventana de 1M tokens para analizar múltiples archivos
+3. Card Visual Style:
+   - Light background (#f9f9f9 or similar).
+   - Rounded corners (12px).
+   - Soft shadow (box-shadow).
+   - Typography consistent with the application (Segoe UI or similar).
+   - Max width: 400px, centered on screen.
+   - Text with line-height 1.5 for readability.
 
-[5] Analytics Agent (Gemini)
-    └─> Agrega indicadores técnicos (SMA, EMA)
-    └─> Integra cálculos en el gráfico
+Deliverables:
+- Updated source code in the repository.
+- Screenshot showing the circular image on the top bar.
+- Screenshot of the card with Murakami’s text.
+- Short README documentation explaining how the functionality was implemented.
 
-[6] Testing Agent (Claude)
-    └─> Explica casos de prueba
-    └─> Documenta errores y soluciones con estilo pedagógico
-
-[7] DevOps Agent (GPT)
-    └─> Configura pipeline en Azure
-    └─> YAML para despliegue automático
-
-[8] Docs Agent (Claude)
-    └─> Genera README y guías claras
-    └─> Traduce lo técnico en narrativas comprensibles
-
-[9] Despliegue final (Copilot + Azure)
-    └─> Orquesta todo y asegura coherencia
+Success Criteria:
+- The image is correctly displayed as a circle in the specified position.
+- Double click event successfully triggers the card with the full text.
+- The card’s visual style is consistent and pleasant, aligned with the application’s design.
 
 
 

@@ -202,7 +202,7 @@ File: `src/theme.js`
 ---
 
 
-# Decision: Searchable CEDEAR Dropdown — Custom Combobox
+# Decision: Searchable CEDEAR Dropdown ï¿½ Custom Combobox
 
 **Date:** 2026-05-17T11:45:48  
 **Author:** Creta  
@@ -218,7 +218,7 @@ Implement a **fully custom combobox** (SearchableDropdown.jsx) using React state
 
 ## Rationale
 
-- **Test compatibility**: The existing test suite (SearchableDropdown.test.jsx, TickerDropdown.test.jsx) was written against a custom combobox contract — it queries for ole="combobox", ole="listbox", ole="option" and checks ria-activedescendant for keyboard focus. eact-select's DOM structure diverges enough that adopting it would require rewriting all tests.
+- **Test compatibility**: The existing test suite (SearchableDropdown.test.jsx, TickerDropdown.test.jsx) was written against a custom combobox contract ï¿½ it queries for ole="combobox", ole="listbox", ole="option" and checks ria-activedescendant for keyboard focus. eact-select's DOM structure diverges enough that adopting it would require rewriting all tests.
 - **Visual consistency**: Direct use of Chakra UI Box components lets us inherit the theme tokens (brand turquoise #06B6D4, Poppins font, 14px border-radius, etc.) without custom CSS overrides.
 - **No new dependency**: eact-select is already installed but its benefit is reduced when the existing tests already specify the ARIA contract in detail.
 
@@ -228,9 +228,9 @@ Implement a **fully custom combobox** (SearchableDropdown.jsx) using React state
 - Filtering is case-insensitive substring match on both 	icket and company fields.
 - HighlightText wraps matched text in <mark> for visual highlight; each ole="option" element carries ria-label={opt.label} to provide a clean accessible name (avoids jsdom's space-insertion between <mark>/<span> elements during accessible name computation).
 - Keyboard: ArrowDown/ArrowUp cycle through filtered options with wrap-around; Enter selects; Escape closes.
-- Placeholder is rendered as a visible <Box> (not just input[placeholder]) so getByText() assertions work — mirrors the react-select placeholder pattern.
+- Placeholder is rendered as a visible <Box> (not just input[placeholder]) so getByText() assertions work ï¿½ mirrors the react-select placeholder pattern.
 - Empty state: "No CEDEARs found".
-- TickerDropdown.jsx re-exports SearchableDropdown as its default — single source of truth.
+- TickerDropdown.jsx re-exports SearchableDropdown as its default ï¿½ single source of truth.
 
 ## Alternatives Considered
 
@@ -266,10 +266,10 @@ Test infrastructure: **Vitest + React Testing Library + jsdom** (confirmed worki
 ## Decision
 
 ### 1. Test file location
-src/components/__tests__/SearchableDropdown.test.jsx — co-located with other component tests. Targets TickerDropdown (the re-export) to validate the public surface.
+src/components/__tests__/SearchableDropdown.test.jsx ï¿½ co-located with other component tests. Targets TickerDropdown (the re-export) to validate the public surface.
 
 ### 2. Mock strategy
-Use a **module-level i.mock('../../data/CedearsList.json', ...)** with a fixed 6-entry dataset. This is sufficient because llOptions is computed once at module load. Tests that require different data (e.g., null fields) must use i.resetModules() + i.doMock() in a separate describe scope — this is deferred (see §5 below).
+Use a **module-level i.mock('../../data/CedearsList.json', ...)** with a fixed 6-entry dataset. This is sufficient because llOptions is computed once at module load. Tests that require different data (e.g., null fields) must use i.resetModules() + i.doMock() in a separate describe scope ï¿½ this is deferred (see ï¿½5 below).
 
 ### 3. Query strategy for options
 The HighlightText component wraps matched substrings in <mark> elements, which JSDOM accessible-name computation splits with spaces. Rule:
@@ -278,7 +278,7 @@ The HighlightText component wraps matched substrings in <mark> elements, which J
 
 ### 4. Interaction patterns
 - Use **userEvent** for user-like interactions (click, keyboard navigation).
-- Use **ireEvent.change** for setting input text programmatically — avoids userEvent simulating individual keystrokes for long strings and special characters.
+- Use **ireEvent.change** for setting input text programmatically ï¿½ avoids userEvent simulating individual keystrokes for long strings and special characters.
 - Use **ireEvent.focus** (not userEvent.click) when re-opening the dropdown immediately after a selection, to avoid a race against the 100 ms setTimeout(close, ...) blur handler.
 
 ### 5. Coverage tiers
@@ -290,8 +290,8 @@ The HighlightText component wraps matched substrings in <mark> elements, which J
 | Search by company name | ? 2 tests | |
 | Case insensitivity | ? 4 tests | |
 | Partial match (1 char, multi-char, exclusions) | ? 4 tests | |
-| Empty search — all options visible | ? 2 tests | |
-| No match — empty state + message | ? 2 tests | |
+| Empty search ï¿½ all options visible | ? 2 tests | |
+| No match ï¿½ empty state + message | ? 2 tests | |
 | Selection (onChange, closes, value prop, special chars) | ? 4 tests | |
 | Keyboard navigation (?, ?, wrap, Enter, Escape, filtered+Enter) | ? 7 tests | |
 | Null/undefined data fields | ? 5 todos | Needs i.resetModules() harness |
@@ -302,14 +302,14 @@ The HighlightText component wraps matched substrings in <mark> elements, which J
 **Total active: 45 tests. Total todos: 5.**
 
 ### 6. Null-field todos
-The 5 it.todo entries in §10 document the requirement that SearchableDropdown must not crash when CedearsList.json contains entries with null/undefined Ticket or Company. The component already guards Ticket != null at llOptions build time and uses Company ?? "". When the implementation is verified stable, implement these tests using i.resetModules() + i.doMock() per test to supply poisoned data.
+The 5 it.todo entries in ï¿½10 document the requirement that SearchableDropdown must not crash when CedearsList.json contains entries with null/undefined Ticket or Company. The component already guards Ticket != null at llOptions build time and uses Company ?? "". When the implementation is verified stable, implement these tests using i.resetModules() + i.doMock() per test to supply poisoned data.
 
 ---
 
 ## Alternatives Rejected
 
 - **react-select** wrapper instead of custom combobox: the team chose a custom combobox. The test file header referencing react-select was corrected.
-- **Snapshot tests**: rejected — too fragile for a component with inline styles and dynamic IDs.
+- **Snapshot tests**: rejected ï¿½ too fragile for a component with inline styles and dynamic IDs.
 - **E2E tests (Playwright/Cypress)**: out of scope for this phase; component-level RTL tests are sufficient.
 
 ---
@@ -339,19 +339,19 @@ TickerDropdown.jsx was upgraded from a static <select> to a **react-select v5** 
 | Placeholder text | screen.getByText('Search CEDEAR by name or ticker...') (it's a <div>, not an attribute) |
 | Selected value | screen.getByText('MSFT') inside .react-select__single-value |
 | Open menu | Assert screen.getByRole('listbox') is in the document |
-| Options | screen.getAllByRole('option') — only available when menu is open |
+| Options | screen.getAllByRole('option') ï¿½ only available when menu is open |
 | Focused option | Check ria-activedescendant on the combobox input |
 | No-match state | screen.getByText('No CEDEARs found') |
 
 ### 2. Interaction patterns
 
-- **Open menu:** wait userEvent.click(comboboxInput) — react-select listens to mousedown, and userEvent correctly dispatches it.
-- **Type to filter:** ireEvent.change(input, { target: { value: 'ABC' } }) — do NOT use userEvent.type() because react-select's internal event chain fires multiple synthetic events per character, making the full test suite ~10× slower.
+- **Open menu:** wait userEvent.click(comboboxInput) ï¿½ react-select listens to mousedown, and userEvent correctly dispatches it.
+- **Type to filter:** ireEvent.change(input, { target: { value: 'ABC' } }) ï¿½ do NOT use userEvent.type() because react-select's internal event chain fires multiple synthetic events per character, making the full test suite ~10ï¿½ slower.
 - **Select option:** wait userEvent.click(optionElement).
-- **Keyboard navigation:** wait userEvent.keyboard('{ArrowDown}') etc. — works normally.
+- **Keyboard navigation:** wait userEvent.keyboard('{ArrowDown}') etc. ï¿½ works normally.
 - **Escape to close:** wait userEvent.keyboard('{Escape}').
 
-### 3. App.test.jsx — stub TickerDropdown
+### 3. App.test.jsx ï¿½ stub TickerDropdown
 
 Add a i.mock('../TickerDropdown', ...) stub in App.test.jsx that renders a plain button. This decouples App integration tests from react-select internals entirely:
 
@@ -368,11 +368,11 @@ vi.mock('../TickerDropdown', () => ({
 TickerDropdown.jsx computes sorted and options at the TOP LEVEL of the module (not inside the component). This means i.mock('../../data/CedearsList.json', ...) in eforeEach has NO EFFECT on rendered options.
 
 - **Standard tests:** use one i.mock(...) at the top of the file; the mocked data is fixed for all tests.
-- **Tests requiring different data** (null fields, empty list): must use i.resetModules() + i.doMock() + dynamic wait import('../TickerDropdown') per test. This pattern is complex and slow — the 5 null-field tests are currently it.todo() entries.
+- **Tests requiring different data** (null fields, empty list): must use i.resetModules() + i.doMock() + dynamic wait import('../TickerDropdown') per test. This pattern is complex and slow ï¿½ the 5 null-field tests are currently it.todo() entries.
 
 ### 5. Null-field risk
 
-ilterOption in TickerDropdown.jsx (line 132–138) accesses data.company and data.ticket with no null guards. If CedearsList.json ever contains entries missing these fields, the filter will crash. **Recommendation:** add null guards:
+ilterOption in TickerDropdown.jsx (line 132ï¿½138) accesses data.company and data.ticket with no null guards. If CedearsList.json ever contains entries missing these fields, the filter will crash. **Recommendation:** add null guards:
 
 `js
 function filterOption({ data }, inputValue) {
@@ -394,8 +394,8 @@ Once the fix is in, implement the 5 it.todo tests using the i.resetModules() ha
 | Search by company name | 2 |
 | Case insensitivity | 4 |
 | Partial match | 4 |
-| Empty search — all options visible | 2 |
-| No match — empty state + message | 2 |
+| Empty search ï¿½ all options visible | 2 |
+| No match ï¿½ empty state + message | 2 |
 | Selection (onChange, closes, value prop, special chars) | 4 |
 | Keyboard navigation (?, ?, Enter, Escape, filtered+Enter) | 5 |
 | Special characters in query | 5 |
@@ -412,9 +412,38 @@ Once the fix is in, implement the 5 it.todo tests using the i.resetModules() ha
 
 ---
 
+# Decision: Wind-Up Bird Chronicle Easter Egg
+
+**Date:** 2026-05-17  
+**Author:** Creta (Frontend Dev)  
+**Status:** Implemented
+
+## Context
+
+Jorge requested a hidden Easter egg in the CedearMonitor header: a circular portrait photo that reveals a literary quote on double-click.
+
+## Decision
+
+- Created `src/components/WindUpBirdEasterEgg.jsx` as a fully self-contained component (image + modal state in one place).
+- The image (`Images/WindupBird.jpg`, ~158 KB JPEG) is imported as a Vite module asset â€” not served from `public/` â€” so it is fingerprinted and bundled with the app.
+- Used Chakra UI v2 `Modal` / `useDisclosure` pattern for the overlay (same pattern as Chakra v2 docs; no external modal library needed).
+- Quote text stored in a single named constant `WIND_UP_BIRD_QUOTE` at the top of the component, clearly marked with a comment `// QUOTE_PLACEHOLDER` for Jorge to locate and replace.
+- `ml="auto"` on the image inside the header `Flex` pushes it to the right without breaking existing layout. `width="100%"` added to the header `Flex` so the auto-margin has full space to work against.
+- Subtitle: `title="The wind-up bird..."` â€” mysterious, not literal. `cursor="pointer"` hints interactivity without advertising the secret.
+
+## Alternatives Considered
+
+- **Floating `Box` overlay** instead of `Modal`: rejected â€” Chakra `Modal` handles focus trap, escape-to-close, and overlay backdrop out of the box with less custom code.
+- **Serving image from `public/`**: skipped â€” no `public/` directory exists in this project; module import is the canonical Vite approach and produces the same result.
+
+## Impact
+
+- No existing tests broken (build passes, 2178 modules).
+- Zero breaking changes to existing header layout or component interfaces.
+
+---
 
 # Decision: Data Export â€” Library Choice and Data Shape
-
 **Date:** 2026-05-17  
 **Author:** Creta (Frontend Dev)  
 **Status:** Implemented
