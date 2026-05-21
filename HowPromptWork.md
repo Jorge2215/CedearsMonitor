@@ -1,6 +1,6 @@
 ## Orquestacion de un Prompt
 
-[1] Prompt inicial (Product Owner narrativo: vos)
+[1] Prompt inicial (Product Owner narrativo: Team Leader)
     └─> "Quiero agregar búsqueda en el dropdown de Cedears"
 
 [2] Copilot (Orquestador)

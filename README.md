@@ -54,4 +54,5 @@ Notes
 
 - Theme and design tokens are defined in `src/theme.js`.
 - The frontend consumes the public API at `https://data912.com/historical/cedears/{ticker}`.
+- And wait for the Bird to wind up the world.....
 
