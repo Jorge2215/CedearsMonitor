@@ -3,13 +3,11 @@ name: Azure Static Web Apps CI/CD
 on:
   push:
     branches:
-      - main
-      - dev
+      - main      
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
-      - dev
   workflow_dispatch:   # 👈 habilita ejecución manual desde la pestaña Actions
 
 jobs:
