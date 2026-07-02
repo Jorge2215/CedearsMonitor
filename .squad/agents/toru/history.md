@@ -21,7 +21,7 @@
   - `src/App.jsx` — root component (wires up all child components and the useCedearData hook)
   - `src/App.css` — layout styles with CSS custom properties
   - `src/index.css` — global reset and CSS variables
-  - `src/data/CedearsList.json` — 120+ CEDEAR tickers (copied from `Data/CedearsList.json`)
+  - `src/data/CedearsList.json` — 120+ CEDEAR tickers
   - `src/components/` — TickerDropdown, DateRangePicker, DataTable, PriceChart (stubs for Creta)
   - `src/services/cedearService.js` — API call stub (for Cinnamon)
   - `src/hooks/useCedearData.js` — data-fetching hook stub (for Cinnamon)
